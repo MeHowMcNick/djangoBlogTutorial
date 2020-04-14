@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Post, Tag
 from django.views.generic import View
-from .utils import DetailObjectMixin
+from .utils import DetailObjectMixin, CreateObjectMixin
+from .forms import TagForm, PostForm
 
 def posts_list(request):
     posts = Post.objects.all()
@@ -22,3 +23,13 @@ class PostDetail(DetailObjectMixin, View):
 class TagDetail(DetailObjectMixin, View):
     model = Tag
     template = "blog/tag_detail.html"
+
+
+class TagCreate(CreateObjectMixin, View):
+    model = TagForm
+    template = "blog/tag_create.html"
+
+
+class PostCreate(CreateObjectMixin, View):
+    model = PostForm
+    template = "blog/post_create.html"
